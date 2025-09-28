@@ -2,7 +2,7 @@
 
 AWS ECS上でMinecraftサーバーを実行し、MCP（Model Context Protocol）を通じてリモートから管理できるツールです。
 
-## 1. 機能
+## 1. 概要
 
 - **AWS ECS上でのMinecraftサーバー実行**: スケーラブルなクラウド環境でMinecraftサーバーを運用
 - **MCP統合**: Claude Desktopやその他のMCPクライアントから直接Minecraftサーバーを管理
@@ -17,6 +17,11 @@ Claude DesktopからMinecraftサーバーを直接操作する様子：
 ![MCP Operation Demo](./img/mcp-demo.gif)
 
 *MCP経由でのMinecraftサーバー操作のデモンストレーション*
+
+### 1-2. システム全体アーキテクチャ
+
+![System Architecture Diagram](./img/system.png)
+*システム全体のアーキテクチャ*
 
 ## 2. 前提条件
 
@@ -274,12 +279,10 @@ echo "SSH_PUBLIC_KEY_PATH=~/.ssh/minecraft-proxy-key.pub" >> .env
 ```
 
 ## 付録
-
-### アーキテクチャ図
-#### スクリプト管理アーキテクチャ
+### スクリプト管理アーキテクチャ
 ![Scripts Architecture Diagram](./img/scripts_architecture.png)
-*図1: スクリプト管理システムのアーキテクチャ　(Powered by Cursor AI Agent)*
+*スクリプト管理システムのアーキテクチャ　(Powered by Cursor AI Agent)*
 
-#### RCONツールアーキテクチャ
+### RCONツールアーキテクチャ
 ![RCON Tool Architecture Diagram](./img/rcon-tool_architecture.png)
-*図2: RCONツールのアーキテクチャ(Powered by Cursor AI Agent)*
+*RCONツールのアーキテクチャ(Powered by Cursor AI Agent)*
