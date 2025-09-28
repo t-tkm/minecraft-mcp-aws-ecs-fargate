@@ -54,7 +54,7 @@ Claude DesktopからMinecraftサーバーを直接操作する様子：
 
 ```bash
 git clone <repository-url>
-cd minecraft-mcp-for-aws-fargate
+cd minecraft-mcp-aws-ecs-fargate
 ```
 
 ### 3-2. 環境設定
