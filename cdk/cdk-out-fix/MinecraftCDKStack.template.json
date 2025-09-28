@@ -1,0 +1,1490 @@
+{
+ "Description": "Minecraft server on AWS ECS with CDK",
+ "Resources": {
+  "NetworkingMinecraftVPCF997ADC4": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Name",
+      "Value": "MinecraftCDKStack/Networking/MinecraftVPC"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftVPC/Resource"
+   }
+  },
+  "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-northeast-1a",
+    "CidrBlock": "10.0.0.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Name",
+      "Value": "MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "VpcId": {
+     "Ref": "NetworkingMinecraftVPCF997ADC4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1/Subnet"
+   }
+  },
+  "NetworkingMinecraftVPCPublicSubnet1RouteTable262B9C56": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Name",
+      "Value": "MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "VpcId": {
+     "Ref": "NetworkingMinecraftVPCF997ADC4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1/RouteTable"
+   }
+  },
+  "NetworkingMinecraftVPCPublicSubnet1RouteTableAssociation743B3B69": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "NetworkingMinecraftVPCPublicSubnet1RouteTable262B9C56"
+    },
+    "SubnetId": {
+     "Ref": "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "NetworkingMinecraftVPCPublicSubnet1DefaultRoute2DDAF345": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "NetworkingMinecraftVPCIGW54CF97B7"
+    },
+    "RouteTableId": {
+     "Ref": "NetworkingMinecraftVPCPublicSubnet1RouteTable262B9C56"
+    }
+   },
+   "DependsOn": [
+    "NetworkingMinecraftVPCVPCGWBF2F7601"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "NetworkingMinecraftVPCIGW54CF97B7": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Name",
+      "Value": "MinecraftCDKStack/Networking/MinecraftVPC"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftVPC/IGW"
+   }
+  },
+  "NetworkingMinecraftVPCVPCGWBF2F7601": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "NetworkingMinecraftVPCIGW54CF97B7"
+    },
+    "VpcId": {
+     "Ref": "NetworkingMinecraftVPCF997ADC4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftVPC/VPCGW"
+   }
+  },
+  "NetworkingMinecraftVPCRestrictDefaultSecurityGroupCustomResource3325135C": {
+   "Type": "Custom::VpcRestrictDefaultSG",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+      "Arn"
+     ]
+    },
+    "DefaultSecurityGroupId": {
+     "Fn::GetAtt": [
+      "NetworkingMinecraftVPCF997ADC4",
+      "DefaultSecurityGroup"
+     ]
+    },
+    "Account": "000435154416"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftVPC/RestrictDefaultSecurityGroupCustomResource/Default"
+   }
+  },
+  "NetworkingMinecraftSecurityGroupD74D4A8D": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Minecraft server security group",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "10.0.0.0/16",
+      "Description": "Minecraft port from VPC",
+      "FromPort": 25565,
+      "IpProtocol": "tcp",
+      "ToPort": 25565
+     },
+     {
+      "CidrIp": "10.0.0.0/16",
+      "Description": "RCON port from VPC",
+      "FromPort": 25575,
+      "IpProtocol": "tcp",
+      "ToPort": 25575
+     },
+     {
+      "CidrIp": "219.104.141.220/32",
+      "Description": "Minecraft port from my IP",
+      "FromPort": 25565,
+      "IpProtocol": "tcp",
+      "ToPort": 25565
+     },
+     {
+      "CidrIp": "219.104.141.220/32",
+      "Description": "RCON port from my IP",
+      "FromPort": 25575,
+      "IpProtocol": "tcp",
+      "ToPort": 25575
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "VpcId": {
+     "Ref": "NetworkingMinecraftVPCF997ADC4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/MinecraftSecurityGroup/Resource"
+   }
+  },
+  "NetworkingEC2ProxySecurityGroup602F0DF1": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "EC2 proxy security group",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "219.104.141.220/32",
+      "Description": "SSH from my IP",
+      "FromPort": 22,
+      "IpProtocol": "tcp",
+      "ToPort": 22
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "VpcId": {
+     "Ref": "NetworkingMinecraftVPCF997ADC4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/EC2ProxySecurityGroup/Resource"
+   }
+  },
+  "NetworkingEFSSecurityGroupA910C4B6": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "EFS security group",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "Description": "EFS NFS from ECS tasks",
+      "FromPort": 2049,
+      "IpProtocol": "tcp",
+      "SourceSecurityGroupId": {
+       "Fn::GetAtt": [
+        "NetworkingMinecraftSecurityGroupD74D4A8D",
+        "GroupId"
+       ]
+      },
+      "ToPort": 2049
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "VpcId": {
+     "Ref": "NetworkingMinecraftVPCF997ADC4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Networking/EFSSecurityGroup/Resource"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupEgress"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:aws:ec2:ap-northeast-1:000435154416:security-group/",
+             {
+              "Fn::GetAtt": [
+               "NetworkingMinecraftVPCF997ADC4",
+               "DefaultSecurityGroup"
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-000435154416-ap-northeast-1",
+     "S3Key": "ee7de53d64cc9d6248fa6aa550f92358f6c907b5efd6f3298aeab1b5e7ea358a.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Description": "Lambda function for removing all inbound/outbound rules from the VPC default security group"
+   },
+   "DependsOn": [
+    "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.ee7de53d64cc9d6248fa6aa550f92358f6c907b5efd6f3298aeab1b5e7ea358a",
+    "aws:asset:property": "Code"
+   }
+  },
+  "StorageMinecraftDataEFSACB8D383": {
+   "Type": "AWS::EFS::FileSystem",
+   "Properties": {
+    "Encrypted": true,
+    "FileSystemTags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Name",
+      "Value": "minecraft-cdk-data"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "PerformanceMode": "generalPurpose",
+    "ThroughputMode": "bursting"
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Storage/MinecraftDataEFS"
+   }
+  },
+  "StorageMinecraftDataMountTarget0F7CE7508": {
+   "Type": "AWS::EFS::MountTarget",
+   "Properties": {
+    "FileSystemId": {
+     "Ref": "StorageMinecraftDataEFSACB8D383"
+    },
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "NetworkingEFSSecurityGroupA910C4B6",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": {
+     "Ref": "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/Storage/MinecraftDataMountTarget0"
+   }
+  },
+  "EC2ProxyMinecraftProxyKeyPairB51CF476": {
+   "Type": "AWS::EC2::KeyPair",
+   "Properties": {
+    "KeyFormat": "pem",
+    "KeyName": "minecraft-cdk-proxy-key",
+    "KeyType": "rsa",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/EC2Proxy/MinecraftProxyKeyPair/Resource"
+   }
+  },
+  "EC2ProxyEC2ProxyRoleDDA1CAA3": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonSSMManagedInstanceCore"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/EC2Proxy/EC2ProxyRole/Resource"
+   }
+  },
+  "EC2ProxyEC2ProxyInstanceProfile60581C45": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "EC2ProxyEC2ProxyRoleDDA1CAA3"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/EC2Proxy/EC2ProxyInstanceProfile"
+   }
+  },
+  "EC2ProxyMinecraftProxyInstanceProfileF1CECE38": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "EC2ProxyEC2ProxyRoleDDA1CAA3"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/EC2Proxy/MinecraftProxy/InstanceProfile"
+   }
+  },
+  "EC2ProxyMinecraftProxy9EBADF07": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "AvailabilityZone": "ap-northeast-1a",
+    "IamInstanceProfile": {
+     "Ref": "EC2ProxyMinecraftProxyInstanceProfileF1CECE38"
+    },
+    "ImageId": {
+     "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amikernel510hvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+    },
+    "InstanceType": "t3.micro",
+    "KeyName": {
+     "Ref": "EC2ProxyMinecraftProxyKeyPairB51CF476"
+    },
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "NetworkingEC2ProxySecurityGroup602F0DF1",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": {
+     "Ref": "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34"
+    },
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Name",
+      "Value": "MinecraftCDKStack/EC2Proxy/MinecraftProxy"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "UserData": {
+     "Fn::Base64": "\n#!/bin/bash\nyum update -y\nyum install -y htop\necho \"EC2 proxy instance ready for Session Manager port forwarding\"\n            "
+    }
+   },
+   "DependsOn": [
+    "EC2ProxyEC2ProxyRoleDDA1CAA3"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/EC2Proxy/MinecraftProxy/Resource"
+   }
+  },
+  "EC2ProxyMinecraftProxyEIP37F68D85": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "InstanceId": {
+     "Ref": "EC2ProxyMinecraftProxy9EBADF07"
+    },
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Name",
+      "Value": "minecraft-cdk-proxy-eip"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/EC2Proxy/MinecraftProxyEIP"
+   }
+  },
+  "LoadBalancerMinecraftLoadBalancer0616A0CD": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Name": "minecraft-cdk-lb",
+    "Scheme": "internal",
+    "Subnets": [
+     {
+      "Ref": "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "Type": "network"
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/LoadBalancer/MinecraftLoadBalancer/Resource"
+   }
+  },
+  "LoadBalancerMinecraftLoadBalancerMinecraftListener19BC35FD": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "LoadBalancerMinecraftTargetGroup34F7FB37"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "LoadBalancerMinecraftLoadBalancer0616A0CD"
+    },
+    "Port": 25565,
+    "Protocol": "TCP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/LoadBalancer/MinecraftLoadBalancer/MinecraftListener/Resource"
+   }
+  },
+  "LoadBalancerMinecraftLoadBalancerRCONListener3D5351DB": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "LoadBalancerRCONTargetGroupF47174CB"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "LoadBalancerMinecraftLoadBalancer0616A0CD"
+    },
+    "Port": 25575,
+    "Protocol": "TCP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/LoadBalancer/MinecraftLoadBalancer/RCONListener/Resource"
+   }
+  },
+  "LoadBalancerMinecraftTargetGroup34F7FB37": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckEnabled": true,
+    "HealthCheckIntervalSeconds": 60,
+    "HealthCheckPort": "traffic-port",
+    "HealthCheckProtocol": "TCP",
+    "HealthyThresholdCount": 2,
+    "Port": 25565,
+    "Protocol": "TCP",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "TargetGroupAttributes": [
+     {
+      "Key": "deregistration_delay.timeout_seconds",
+      "Value": "30"
+     }
+    ],
+    "TargetType": "ip",
+    "UnhealthyThresholdCount": 2,
+    "VpcId": {
+     "Ref": "NetworkingMinecraftVPCF997ADC4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/LoadBalancer/MinecraftTargetGroup/Resource"
+   }
+  },
+  "LoadBalancerRCONTargetGroupF47174CB": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckEnabled": true,
+    "HealthCheckIntervalSeconds": 60,
+    "HealthCheckPort": "traffic-port",
+    "HealthCheckProtocol": "TCP",
+    "HealthyThresholdCount": 2,
+    "Port": 25575,
+    "Protocol": "TCP",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "TargetGroupAttributes": [
+     {
+      "Key": "deregistration_delay.timeout_seconds",
+      "Value": "30"
+     }
+    ],
+    "TargetType": "ip",
+    "UnhealthyThresholdCount": 2,
+    "VpcId": {
+     "Ref": "NetworkingMinecraftVPCF997ADC4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/LoadBalancer/RCONTargetGroup/Resource"
+   }
+  },
+  "ECSMinecraftLogs8918A068": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/minecraft-cdk-minecraft-on-ecs",
+    "RetentionInDays": 7,
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/ECS/MinecraftLogs/Resource"
+   }
+  },
+  "ECSMinecraftClusterE41E8CB9": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "ClusterName": "minecraft-cdk-cluster",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/ECS/MinecraftCluster/Resource"
+   }
+  },
+  "ECSTaskExecutionRole20B159BE": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/ECS/TaskExecutionRole/Resource"
+   }
+  },
+  "ECSTaskExecutionRoleDefaultPolicyA11356BB": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ECSMinecraftLogs8918A068",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ECSTaskExecutionRoleDefaultPolicyA11356BB",
+    "Roles": [
+     {
+      "Ref": "ECSTaskExecutionRole20B159BE"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/ECS/TaskExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "ECSTaskRole85599D67": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonElasticFileSystemClientReadWriteAccess"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/ECS/TaskRole/Resource"
+   }
+  },
+  "ECSTaskRoleDefaultPolicy70977AF0": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams",
+        "logs:PutLogEvents",
+        "ssmmessages:CreateControlChannel",
+        "ssmmessages:CreateDataChannel",
+        "ssmmessages:OpenControlChannel",
+        "ssmmessages:OpenDataChannel"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ECSTaskRoleDefaultPolicy70977AF0",
+    "Roles": [
+     {
+      "Ref": "ECSTaskRole85599D67"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/ECS/TaskRole/DefaultPolicy/Resource"
+   }
+  },
+  "ECSMinecraftTaskDefinitionD74FDEBF": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "EULA",
+        "Value": "TRUE"
+       },
+       {
+        "Name": "VERSION",
+        "Value": "1.21.8"
+       },
+       {
+        "Name": "TYPE",
+        "Value": "PAPER"
+       },
+       {
+        "Name": "MOTD",
+        "Value": "Minecraft on AWS ECS"
+       },
+       {
+        "Name": "DIFFICULTY",
+        "Value": "normal"
+       },
+       {
+        "Name": "GAMEMODE",
+        "Value": "survival"
+       },
+       {
+        "Name": "MAX_PLAYERS",
+        "Value": "20"
+       },
+       {
+        "Name": "RCON_PASSWORD",
+        "Value": "hogehoge12345"
+       },
+       {
+        "Name": "ENABLE_RCON",
+        "Value": "true"
+       },
+       {
+        "Name": "RCON_PORT",
+        "Value": "25575"
+       },
+       {
+        "Name": "JAVA_OPTS",
+        "Value": "-Xms6G -Xmx6G"
+       }
+      ],
+      "Essential": true,
+      "Image": "itzg/minecraft-server:latest",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "ECSMinecraftLogs8918A068"
+        },
+        "awslogs-stream-prefix": "minecraft-cdk",
+        "awslogs-region": "ap-northeast-1"
+       }
+      },
+      "Memory": 8192,
+      "MemoryReservation": 4096,
+      "MountPoints": [
+       {
+        "ContainerPath": "/data",
+        "ReadOnly": false,
+        "SourceVolume": "data"
+       }
+      ],
+      "Name": "minecraft-cdk-container",
+      "PortMappings": [
+       {
+        "ContainerPort": 25565,
+        "Protocol": "tcp"
+       },
+       {
+        "ContainerPort": 25575,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "2048",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "ECSTaskExecutionRole20B159BE",
+      "Arn"
+     ]
+    },
+    "Family": "MinecraftCDKStackECSMinecraftTaskDefinition72BF514F",
+    "Memory": "8192",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "ECSTaskRole85599D67",
+      "Arn"
+     ]
+    },
+    "Volumes": [
+     {
+      "EFSVolumeConfiguration": {
+       "AuthorizationConfig": {
+        "IAM": "DISABLED"
+       },
+       "FilesystemId": {
+        "Ref": "StorageMinecraftDataEFSACB8D383"
+       },
+       "RootDirectory": "/",
+       "TransitEncryption": "DISABLED"
+      },
+      "Name": "data"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/ECS/MinecraftTaskDefinition/Resource"
+   }
+  },
+  "ECSMinecraftService4B964AE5": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "ECSMinecraftClusterE41E8CB9"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "EnableExecuteCommand": true,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "minecraft-cdk-container",
+      "ContainerPort": 25565,
+      "TargetGroupArn": {
+       "Ref": "LoadBalancerMinecraftTargetGroup34F7FB37"
+      }
+     },
+     {
+      "ContainerName": "minecraft-cdk-container",
+      "ContainerPort": 25575,
+      "TargetGroupArn": {
+       "Ref": "LoadBalancerRCONTargetGroupF47174CB"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "ENABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "NetworkingMinecraftSecurityGroupD74D4A8D",
+         "GroupId"
+        ]
+       },
+       {
+        "Fn::GetAtt": [
+         "NetworkingEFSSecurityGroupA910C4B6",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34"
+       }
+      ]
+     }
+    },
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "cdk"
+     },
+     {
+      "Key": "Project",
+      "Value": "minecraft-cdk"
+     }
+    ],
+    "TaskDefinition": {
+     "Ref": "ECSMinecraftTaskDefinitionD74FDEBF"
+    }
+   },
+   "DependsOn": [
+    "ECSTaskRoleDefaultPolicy70977AF0",
+    "ECSTaskRole85599D67",
+    "LoadBalancerMinecraftLoadBalancerMinecraftListener19BC35FD",
+    "LoadBalancerMinecraftLoadBalancerRCONListener3D5351DB"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/ECS/MinecraftService/Service"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12R3W7bMAyFn6X3irZ6A3adZmsRrNuMuOjtQCu0y0UmA4lKEBh+98F/cdorfTyHIikqs/dfv9nsDs5x5faHlafStoWCOxg4x78tusy2r0dnNhW/5huTp9KTK1LJqL220E6S4guUHhd90dYxiiNQEr4m97BlxcCoT6B4hsvUZorWquDeGmQ1BboUSC9PQdJxaPBO+ImXHCj0xoxbjgrspi4L/9jmncEq2nZT8SN5LC5RsemtX5JYXyDUqJ0haGy7k/E58zkXyoNU5NHk4skNU4/UGfQQlZwX2JfggR1xfcps+xv1LOHwLLB/GHQcpn0XzzkUFXnyZ568cbrrFm7Cznipo22fpb7aM3cGXf9gn6KOdWd8hFBD/0fx8B0rYpp/6KMirECM4Uab7hYYTjTudsKuMzuMkkKvpqjSLGHFt/wn6THph6Q8yIn2GB4golnHiFoo1MT1sGcI0KBi6Ex+0TfhT1/sfWY/3/2LRKuQWKlBuxvP/6SChsfeAgAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "MinecraftCDKStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "NetworkingVPCId1DD5F020": {
+   "Description": "VPC ID",
+   "Value": {
+    "Ref": "NetworkingMinecraftVPCF997ADC4"
+   }
+  },
+  "NetworkingPublicSubnetId74A9A90E": {
+   "Description": "Public Subnet ID",
+   "Value": {
+    "Ref": "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34"
+   }
+  },
+  "NetworkingMinecraftSecurityGroupIdBDC24A47": {
+   "Description": "Minecraft Security Group ID",
+   "Value": {
+    "Fn::GetAtt": [
+     "NetworkingMinecraftSecurityGroupD74D4A8D",
+     "GroupId"
+    ]
+   }
+  },
+  "NetworkingEC2ProxySecurityGroupId693B3B8F": {
+   "Description": "EC2 Proxy Security Group ID",
+   "Value": {
+    "Fn::GetAtt": [
+     "NetworkingEC2ProxySecurityGroup602F0DF1",
+     "GroupId"
+    ]
+   }
+  },
+  "NetworkingEFSSecurityGroupIdD40508A1": {
+   "Description": "EFS Security Group ID",
+   "Value": {
+    "Fn::GetAtt": [
+     "NetworkingEFSSecurityGroupA910C4B6",
+     "GroupId"
+    ]
+   }
+  },
+  "StorageEFSFileSystemId834178EC": {
+   "Description": "EFS File System ID",
+   "Value": {
+    "Ref": "StorageMinecraftDataEFSACB8D383"
+   }
+  },
+  "StorageEFSFileSystemArnB95F1722": {
+   "Description": "EFS File System ARN",
+   "Value": {
+    "Fn::GetAtt": [
+     "StorageMinecraftDataEFSACB8D383",
+     "Arn"
+    ]
+   }
+  },
+  "EC2ProxyEC2InstanceId588D3A84": {
+   "Description": "EC2 Instance ID",
+   "Value": {
+    "Ref": "EC2ProxyMinecraftProxy9EBADF07"
+   }
+  },
+  "EC2ProxyElasticIPFB4D4054": {
+   "Description": "Elastic IP",
+   "Value": {
+    "Ref": "EC2ProxyMinecraftProxyEIP37F68D85"
+   }
+  },
+  "EC2ProxyKeyPairNameBDD9E555": {
+   "Description": "Key Pair Name",
+   "Value": {
+    "Ref": "EC2ProxyMinecraftProxyKeyPairB51CF476"
+   }
+  },
+  "LoadBalancerLoadBalancerDNSA73D31AC": {
+   "Description": "Load Balancer DNS Name",
+   "Value": {
+    "Fn::GetAtt": [
+     "LoadBalancerMinecraftLoadBalancer0616A0CD",
+     "DNSName"
+    ]
+   }
+  },
+  "LoadBalancerLoadBalancerArn8666BC3A": {
+   "Description": "Load Balancer ARN",
+   "Value": {
+    "Ref": "LoadBalancerMinecraftLoadBalancer0616A0CD"
+   }
+  },
+  "LoadBalancerMinecraftTargetGroupArn5DFE84C5": {
+   "Description": "Minecraft Target Group ARN",
+   "Value": {
+    "Ref": "LoadBalancerMinecraftTargetGroup34F7FB37"
+   }
+  },
+  "LoadBalancerRCONTargetGroupArn54FE7CF7": {
+   "Description": "RCON Target Group ARN",
+   "Value": {
+    "Ref": "LoadBalancerRCONTargetGroupF47174CB"
+   }
+  },
+  "ECSECSClusterName1A752393": {
+   "Description": "ECS Cluster Name",
+   "Value": {
+    "Ref": "ECSMinecraftClusterE41E8CB9"
+   }
+  },
+  "ECSECSServiceNameAF092BD2": {
+   "Description": "ECS Service Name",
+   "Value": {
+    "Fn::GetAtt": [
+     "ECSMinecraftService4B964AE5",
+     "Name"
+    ]
+   }
+  },
+  "ECSTaskDefinitionArnA36C86AB": {
+   "Description": "Task Definition ARN",
+   "Value": {
+    "Ref": "ECSMinecraftTaskDefinitionD74FDEBF"
+   }
+  },
+  "VPCId": {
+   "Description": "VPC ID",
+   "Value": {
+    "Ref": "NetworkingMinecraftVPCF997ADC4"
+   }
+  },
+  "PublicSubnetId": {
+   "Description": "Public Subnet ID",
+   "Value": {
+    "Ref": "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34"
+   }
+  },
+  "EFSFileSystemId": {
+   "Description": "EFS File System ID",
+   "Value": {
+    "Ref": "StorageMinecraftDataEFSACB8D383"
+   }
+  },
+  "EC2InstanceId": {
+   "Description": "EC2 Instance ID",
+   "Value": {
+    "Ref": "EC2ProxyMinecraftProxy9EBADF07"
+   }
+  },
+  "ElasticIP": {
+   "Description": "Elastic IP",
+   "Value": {
+    "Ref": "EC2ProxyMinecraftProxyEIP37F68D85"
+   }
+  },
+  "LoadBalancerDNS": {
+   "Description": "Load Balancer DNS Name",
+   "Value": {
+    "Fn::GetAtt": [
+     "LoadBalancerMinecraftLoadBalancer0616A0CD",
+     "DNSName"
+    ]
+   }
+  },
+  "ECSClusterName": {
+   "Description": "ECS Cluster Name",
+   "Value": {
+    "Ref": "ECSMinecraftClusterE41E8CB9"
+   }
+  },
+  "ECSServiceName": {
+   "Description": "ECS Service Name",
+   "Value": {
+    "Fn::GetAtt": [
+     "ECSMinecraftService4B964AE5",
+     "Name"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amikernel510hvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+   "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-kernel-5.10-hvm-x86_64-gp2"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

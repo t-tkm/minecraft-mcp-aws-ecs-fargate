@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "minecraft-rcon-ecs": {
+      "command": "/path/to/your/project/rcon-tool/.venv/bin/python",
+      "args": [
+        "/path/to/your/project/rcon-tool/rcon.py"
+      ],
+      "env": {
+        "AWS_PROFILE": "your-aws-profile",
+        "AWS_REGION": "ap-northeast-1"
+      }
+    }
+  }
+}

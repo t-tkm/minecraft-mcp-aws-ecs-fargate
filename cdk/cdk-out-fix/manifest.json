@@ -1,0 +1,489 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "MinecraftCDKStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "MinecraftCDKStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "MinecraftCDKStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://000435154416/ap-northeast-1",
+      "properties": {
+        "templateFile": "MinecraftCDKStack.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "Environment": "dev",
+          "ManagedBy": "cdk",
+          "Project": "minecraft-cdk"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::000435154416:role/cdk-hnb659fds-deploy-role-000435154416-ap-northeast-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::000435154416:role/cdk-hnb659fds-cfn-exec-role-000435154416-ap-northeast-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-000435154416-ap-northeast-1/723040b747e20f6c1e4b98815d960b3029afd221cc34667dea182a5d8b917b1b.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "MinecraftCDKStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::000435154416:role/cdk-hnb659fds-lookup-role-000435154416-ap-northeast-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "MinecraftCDKStack.assets"
+      ],
+      "metadata": {
+        "/MinecraftCDKStack": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "Environment",
+                "Value": "dev"
+              },
+              {
+                "Key": "ManagedBy",
+                "Value": "cdk"
+              },
+              {
+                "Key": "Project",
+                "Value": "minecraft-cdk"
+              }
+            ]
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftVPC/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftVPCF997ADC4"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftVPCPublicSubnet1SubnetF4E97E34"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftVPCPublicSubnet1RouteTable262B9C56"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftVPCPublicSubnet1RouteTableAssociation743B3B69"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftVPC/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftVPCPublicSubnet1DefaultRoute2DDAF345"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftVPC/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftVPCIGW54CF97B7"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftVPC/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftVPCVPCGWBF2F7601"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftVPC/RestrictDefaultSecurityGroupCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftVPCRestrictDefaultSecurityGroupCustomResource3325135C"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftSecurityGroupD74D4A8D"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/EC2ProxySecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingEC2ProxySecurityGroup602F0DF1"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/EFSSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingEFSSecurityGroupA910C4B6"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/VPCId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingVPCId1DD5F020"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/PublicSubnetId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingPublicSubnetId74A9A90E"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/MinecraftSecurityGroupId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingMinecraftSecurityGroupIdBDC24A47"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/EC2ProxySecurityGroupId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingEC2ProxySecurityGroupId693B3B8F"
+          }
+        ],
+        "/MinecraftCDKStack/Networking/EFSSecurityGroupId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingEFSSecurityGroupIdD40508A1"
+          }
+        ],
+        "/MinecraftCDKStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+          }
+        ],
+        "/MinecraftCDKStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E"
+          }
+        ],
+        "/MinecraftCDKStack/Storage/MinecraftDataEFS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StorageMinecraftDataEFSACB8D383"
+          }
+        ],
+        "/MinecraftCDKStack/Storage/MinecraftDataMountTarget0": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StorageMinecraftDataMountTarget0F7CE7508"
+          }
+        ],
+        "/MinecraftCDKStack/Storage/EFSFileSystemId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StorageEFSFileSystemId834178EC"
+          }
+        ],
+        "/MinecraftCDKStack/Storage/EFSFileSystemArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StorageEFSFileSystemArnB95F1722"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/MinecraftProxyKeyPair/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyMinecraftProxyKeyPairB51CF476"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/EC2ProxyRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyEC2ProxyRoleDDA1CAA3"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/EC2ProxyInstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyEC2ProxyInstanceProfile60581C45"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/MinecraftProxy": [
+          {
+            "type": "tags",
+            "data": {
+              "Name": "minecraft-cdk-proxy",
+              "Environment": "dev",
+              "Project": "minecraft-cdk"
+            }
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/MinecraftProxy/InstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyMinecraftProxyInstanceProfileF1CECE38"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/MinecraftProxy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyMinecraftProxy9EBADF07"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/MinecraftProxyEIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyMinecraftProxyEIP37F68D85"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/EC2InstanceId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyEC2InstanceId588D3A84"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/ElasticIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyElasticIPFB4D4054"
+          }
+        ],
+        "/MinecraftCDKStack/EC2Proxy/KeyPairName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2ProxyKeyPairNameBDD9E555"
+          }
+        ],
+        "/MinecraftCDKStack/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-kernel-5.10-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amikernel510hvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/MinecraftLoadBalancer": [
+          {
+            "type": "tags",
+            "data": {
+              "Name": "minecraft-cdk-lb",
+              "Environment": "dev",
+              "Project": "minecraft-cdk"
+            }
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/MinecraftLoadBalancer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerMinecraftLoadBalancer0616A0CD"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/MinecraftLoadBalancer/MinecraftListener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerMinecraftLoadBalancerMinecraftListener19BC35FD"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/MinecraftLoadBalancer/RCONListener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerMinecraftLoadBalancerRCONListener3D5351DB"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/MinecraftTargetGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerMinecraftTargetGroup34F7FB37"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/RCONTargetGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerRCONTargetGroupF47174CB"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/LoadBalancerDNS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerLoadBalancerDNSA73D31AC"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/LoadBalancerArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerLoadBalancerArn8666BC3A"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/MinecraftTargetGroupArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerMinecraftTargetGroupArn5DFE84C5"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancer/RCONTargetGroupArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerRCONTargetGroupArn54FE7CF7"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/MinecraftLogs/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSMinecraftLogs8918A068"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/MinecraftCluster": [
+          {
+            "type": "tags",
+            "data": {
+              "Name": "minecraft-cdk-cluster",
+              "Environment": "dev",
+              "Project": "minecraft-cdk"
+            }
+          }
+        ],
+        "/MinecraftCDKStack/ECS/MinecraftCluster/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSMinecraftClusterE41E8CB9"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/TaskExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSTaskExecutionRole20B159BE"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/TaskExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSTaskExecutionRoleDefaultPolicyA11356BB"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/TaskRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSTaskRole85599D67"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/TaskRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSTaskRoleDefaultPolicy70977AF0"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/MinecraftTaskDefinition/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSMinecraftTaskDefinitionD74FDEBF"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/MinecraftService": [
+          {
+            "type": "tags",
+            "data": {
+              "Name": "minecraft-cdk-service",
+              "Environment": "dev",
+              "Project": "minecraft-cdk"
+            }
+          }
+        ],
+        "/MinecraftCDKStack/ECS/MinecraftService/Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSMinecraftService4B964AE5"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/ECSClusterName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSECSClusterName1A752393"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/ECSServiceName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSECSServiceNameAF092BD2"
+          }
+        ],
+        "/MinecraftCDKStack/ECS/TaskDefinitionArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSTaskDefinitionArnA36C86AB"
+          }
+        ],
+        "/MinecraftCDKStack/VPCId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VPCId"
+          }
+        ],
+        "/MinecraftCDKStack/PublicSubnetId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PublicSubnetId"
+          }
+        ],
+        "/MinecraftCDKStack/EFSFileSystemId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EFSFileSystemId"
+          }
+        ],
+        "/MinecraftCDKStack/EC2InstanceId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2InstanceId"
+          }
+        ],
+        "/MinecraftCDKStack/ElasticIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ElasticIP"
+          }
+        ],
+        "/MinecraftCDKStack/LoadBalancerDNS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerDNS"
+          }
+        ],
+        "/MinecraftCDKStack/ECSClusterName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSClusterName"
+          }
+        ],
+        "/MinecraftCDKStack/ECSServiceName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSServiceName"
+          }
+        ],
+        "/MinecraftCDKStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/MinecraftCDKStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/MinecraftCDKStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "MinecraftCDKStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

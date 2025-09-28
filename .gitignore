@@ -1,0 +1,75 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Terraform files
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+.terraform.tfstate.lock.info
+terraform.tfvars
+*.tfplan
+*.tfplan.*
+
+# Logs
+logs/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AWS
+.aws/
+
+# SSH keys
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# CDK
+cdk.out/
+
+# MCP configuration files with sensitive data
+example/claude-desktop-mcp.json
+claude-desktop-mcp.json
+.env.bak
+
+# Draw.io files
+*.drawio

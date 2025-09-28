@@ -1,0 +1,8 @@
+# Minecraft MCP Project - Tool Versions
+# このファイルはツールのバージョンを管理するために使用されます
+# 各ツールの推奨バージョンを記載しています
+# Core tools
+python 3.12.8
+nodejs 22.19.0
+awscli 2.30.7
+jq 1.8.1
